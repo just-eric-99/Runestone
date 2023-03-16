@@ -20,6 +20,10 @@ public struct TextEditor: UIViewRepresentable {
   public let language: TreeSitterLanguage?
   public let configuration: Configuration
   
+  var onLoadSuccess: (() -> ())?
+  var onLoadFail: ((Error) -> ())?
+  var onContentChange: ((String) -> ())?
+  
   public init(text: Binding<String>, theme: Theme, language: TreeSitterLanguage? = nil, configuration: Configuration = .init()) {
     self.text = text
     self.actualTheme = OverridingTheme(base: theme)
@@ -77,6 +81,24 @@ extension TextEditor {
     var config = configuration
     config.isEditable = false
     self.init(text: .constant(text), theme: theme, language: language, configuration: config)
+  }
+
+  public func onLoadSuccess(_ action: @escaping (() -> ())) -> Self {
+    var copy = self
+    copy.onLoadSuccess = action
+    return copy
+  }
+    
+  public func onLoadFail(_ action: @escaping ((Error) -> ())) -> Self {
+    var copy = self
+    copy.onLoadFail = action
+    return copy
+  }
+    
+  public func onContentChange(_ action: @escaping ((String) -> ())) -> Self {
+    var copy = self
+    copy.onContentChange = action
+    return copy
   }
 }
 
