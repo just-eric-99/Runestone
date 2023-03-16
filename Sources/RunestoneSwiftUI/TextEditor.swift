@@ -78,24 +78,6 @@ extension TextEditor {
     config.isEditable = false
     self.init(text: .constant(text), theme: theme, language: language, configuration: config)
   }
-
-  public func onLoadSuccess(_ action: @escaping (() -> ())) -> Self {
-    var copy = self
-    copy.onLoadSuccess = action
-    return copy
-  }
-    
-  public func onLoadFail(_ action: @escaping ((Error) -> ())) -> Self {
-    var copy = self
-    copy.onLoadFail = action
-    return copy
-  }
-    
-  public func onContentChange(_ action: @escaping ((String) -> ())) -> Self {
-    var copy = self
-    copy.onContentChange = action
-    return copy
-  }
 }
 
 public class TextEditorCoordinator: ObservableObject {
