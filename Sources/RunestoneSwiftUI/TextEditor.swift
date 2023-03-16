@@ -34,6 +34,11 @@ public struct TextEditor: UIViewRepresentable {
   public func makeUIView(context: Context) -> UIView {
     let textView = TextView()
     textView.apply(configuration)
+    textView.autocapitalizationType = .none
+    textView.autocorrectionType = .no
+    textView.characterPairs = BasicCharacterPairs.basicPairs
+    textView.smartDashesType = .no
+    textView.smartQuotesType = .no
     
     textView.editorDelegate = context.coordinator
     context.coordinator.configure(text: text, theme: actualTheme, language: language) { state in
@@ -121,4 +126,19 @@ extension View {
   public func themeFontSize(_ size: Double) -> some View {
     environment(\.themeFontSize, size)
   }
+}
+
+struct BasicCharacterPairs: CharacterPair {
+    var leading: String
+    
+    var trailing: String
+    
+    static var basicPairs: [CharacterPair] = [
+        BasicCharacterPairs(leading: "(", trailing: ")"),
+        BasicCharacterPairs(leading: "{", trailing: "}"),
+        BasicCharacterPairs(leading: "[", trailing: "]"),
+        BasicCharacterPairs(leading: "\"", trailing: "\""),
+        BasicCharacterPairs(leading: "\'", trailing: "\'"),
+        BasicCharacterPairs(leading: "`", trailing: "`")
+    ]
 }
