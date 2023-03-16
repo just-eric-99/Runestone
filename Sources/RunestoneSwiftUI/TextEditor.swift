@@ -125,7 +125,7 @@ public class TextEditorCoordinator: ObservableObject {
 extension TextEditorCoordinator: Runestone.TextViewDelegate {
   public func textViewDidChange(_ textView: TextView) {
     text?.wrappedValue = textView.text
-    onContentChange?(textView.text)
+    textView.onContentChange?(textView.text)
   }
 }
 
