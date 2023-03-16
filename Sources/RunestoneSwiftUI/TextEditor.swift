@@ -20,10 +20,6 @@ public struct TextEditor: UIViewRepresentable {
   public let language: TreeSitterLanguage?
   public let configuration: Configuration
   
-  var onLoadSuccess: (() -> ())?
-  var onLoadFail: ((Error) -> ())?
-  var onContentChange: ((String) -> ())?
-  
   public init(text: Binding<String>, theme: Theme, language: TreeSitterLanguage? = nil, configuration: Configuration = .init()) {
     self.text = text
     self.actualTheme = OverridingTheme(base: theme)
@@ -125,7 +121,6 @@ public class TextEditorCoordinator: ObservableObject {
 extension TextEditorCoordinator: Runestone.TextViewDelegate {
   public func textViewDidChange(_ textView: TextView) {
     text?.wrappedValue = textView.text
-    textView.onContentChange?(textView.text)
   }
 }
 
