@@ -10,6 +10,13 @@ import UIKit
 
 @_exported import Runestone
 
+public var caretPosition = RunestoneCaretPosition(line: 0, column: 0)
+
+public struct RunestoneCaretPosition: Codable {
+    var line: Int
+    var column: Int
+}
+
 public struct TextEditor: UIViewRepresentable {
     
     @Environment(\.themeFontSize) var themeFontSize
@@ -81,6 +88,12 @@ public struct TextEditor: UIViewRepresentable {
     
     public func updateUIView(_ uiView: UIView, context: Context) {
         guard let textView = uiView as? TextView else { return assertionFailure() }
+        
+        if let textLocation = textView.textLocation(at: textView.selectedRange.location) {
+//            print("Line = \(textLocation.lineNumber + 1), column = \(textLocation.column + 1)")
+            caretPosition = RunestoneCaretPosition(line: textLocation.lineNumber, column: textLocation.column)
+        }
+        
         
         // Update from context, such as...
         switch context.environment.disableAutocorrection {
