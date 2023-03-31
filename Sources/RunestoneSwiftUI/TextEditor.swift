@@ -10,7 +10,7 @@ import UIKit
 
 @_exported import Runestone
 
-public var caretPosition = RunestoneCaretPosition(line: 0, column: 0)
+public var textView = TextView()
 
 public struct RunestoneCaretPosition: Codable {
     var line: Int
@@ -46,7 +46,7 @@ public struct TextEditor: UIViewRepresentable {
     }
     
     public func makeUIView(context: Context) -> UIView {
-        let textView = TextView()
+        textView = TextView()
         textView.apply(configuration)
         textView.autocapitalizationType = .none
         textView.autocorrectionType = .no
@@ -89,10 +89,10 @@ public struct TextEditor: UIViewRepresentable {
     public func updateUIView(_ uiView: UIView, context: Context) {
         guard let textView = uiView as? TextView else { return assertionFailure() }
         
-        if let textLocation = textView.textLocation(at: textView.selectedRange.location) {
-//            print("Line = \(textLocation.lineNumber + 1), column = \(textLocation.column + 1)")
-            caretPosition = RunestoneCaretPosition(line: textLocation.lineNumber, column: textLocation.column)
-        }
+//        if let textLocation = textView.textLocation(at: textView.selectedRange.location) {
+////            print("Line = \(textLocation.lineNumber + 1), column = \(textLocation.column + 1)")
+//            caretPosition = RunestoneCaretPosition(line: textLocation.lineNumber, column: textLocation.column)
+//        }
         
         
         // Update from context, such as...
