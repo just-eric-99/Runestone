@@ -70,6 +70,7 @@ public struct TextEditor: UIViewRepresentable {
         textView.isAutomaticScrollEnabled = true
         textView.isScrollEnabled = true
         textView.scrollIndicatorInsets = UIEdgeInsets()
+        textView.indentStrategy = .space(length: 4)
         
         textView.editorDelegate = context.coordinator
         context.coordinator.configure(text: text, theme: actualTheme, language: language) { state in
